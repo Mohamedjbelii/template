@@ -1,12 +1,12 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   application:
-    name: customers
+    name: fraud
   datasource:
     username: 'amigoscode'
-    url: jdbc:postgresql://localhost:5432/customer
+    url: jdbc:postgresql://localhost:5432/fraud
     password: 'password'
   jpa:
     show-sql: true
@@ -20,9 +20,6 @@ spring:
             mode: none
     hibernate:
       ddl-auto: create-drop
-  zipkin:
-    base-url: http://localhost:9411
-
 eureka:
   client:
     service-url:
