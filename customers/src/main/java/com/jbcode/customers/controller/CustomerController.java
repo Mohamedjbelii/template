@@ -18,5 +18,7 @@ private final CustomerService customerService;
     public  void registerCustomer(@RequestBody CustomerRegistrationRequest customerRegistrationRequest){
         log.info("customer registration {}",customerRegistrationRequest );
         customerService.registerCustomer(customerRegistrationRequest);
+        log.info("removing conflictgit add <conflicted_file(s)>\n" +
+                "git commit -m \"Resolve conflicts\"\n");
     }
 }
