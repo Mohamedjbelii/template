@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: fraud
+    name: fraudtser
   datasource:
     username: 'amigoscode'
     url: jdbc:postgresql://localhost:5432/fraud
