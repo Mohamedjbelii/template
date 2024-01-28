@@ -1,5 +1,6 @@
 package com.jbcode.customers.service;
 
+import com.jbcode.amqp.RabbitMQMessageProducer;
 import com.jbcode.clients.fraud.interfaces.FraudClient;
 import com.jbcode.clients.fraud.record.FraudCheckResponse;
 import com.jbcode.clients.notification.interfaces.NotificationClient;
@@ -18,6 +19,7 @@ public class CustomerService {
     private final NotificationClient notificationClient;
     private final FraudClient fraudClient;
 
+    private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
 
     public void registerCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
@@ -42,13 +44,16 @@ public class CustomerService {
 
        // todo : send notification
         // todo: make it async. i.e add to queue
-        notificationClient.sendNotification(
-                new NotificationRequest(
-                        customer.getId(),
-                        customer.getEmail(),
-                        String.format("Hi %s, welcome to Amigoscode...",
-                                customer.getFirstName())
-                )
+        NotificationRequest notificationRequest = new NotificationRequest(
+                customer.getId(),
+                customer.getEmail(),
+                String.format("Hi %s, welcome to Amigoscode...",
+                        customer.getFirstName())
+        );
+        rabbitMQMessageProducer.publish(
+                notificationRequest,
+                "internal.exchange",
+                "internal.notification.routing-key"
         );
     }
 }
